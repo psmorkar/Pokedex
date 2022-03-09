@@ -1,6 +1,6 @@
 var flag = true;
 const cachedPokemon = {};
-var currentPoke;
+var currentPoke = {};
 
 async function getPokemonInfo(name) {
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
