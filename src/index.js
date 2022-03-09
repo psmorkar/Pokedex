@@ -59,5 +59,6 @@ function toggleImage() {
 
 function showPoke(id) {
   console.log("Show poke" + id);
+  currentPoke = cachedPokemon[id];
   getPokemonGeneralInfo(cachedPokemon[id]);
 }
