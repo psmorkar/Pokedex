@@ -1,0 +1,36 @@
+<body>
+  <div id="container">
+    <h1>Search Pokemon</h1>
+    <div id="pokedex">
+      <form>
+        <p>
+          <input id="poke-name" type="text" placeholder="pokemon" />
+        </p>
+      </form>
+
+      <button type="button" id="search">Search!</button>
+      <button type="button" id="save">Save!</button>
+    </div>
+  </div>
+
+  <div class="screen__header">#<span class="poke-id"></span></div>
+
+  <div class="screen__description">
+    <div class="stats__types">
+      <span class="poke-type-one"></span>
+      <span class="poke-type-two"></span>
+    </div>
+    <div class="screen__stats">
+      <p class="stats__weight">weight: <span class="poke-weight"></span></p>
+      <p class="stats__height">height: <span class="poke-height"></span></p>
+    </div>
+  </div>
+
+  <div class="screen__image">
+    <button class="toggleCard"><img src="" class="card" alt="front" /></button>
+  </div>
+  <div class="pokemon-container"></div>
+  <!--container end-->
+
+  <script type="text/javascript" src="index.js"></script>
+</body>
