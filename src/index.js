@@ -1,6 +1,7 @@
 var flag = true;
 const cachedPokemon = {};
 var currentPoke = {};
+$("#pokemonImage").attr("src", "" );
 
 async function getPokemonInfo(name) {
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
@@ -12,7 +13,7 @@ async function getPokemonInfo(name) {
 
 function getPokemonGeneralInfo(pokemon) {
   $("#pokeInfo").text("Pokemon Name " + pokemon.name);
-  $("#pokemonImage").attr("src", pokemon.sprites.front_default);
+  $("#pokemonImage").attr("src", pokemon.sprites.front_default || "" );
   $("#weight").text("Pokemon Weight  " + pokemon.weight);
   $("#height").text("Pokemon Heigh " + pokemon.height);
   $("#type1").text("Pokemon Type1 : " + pokemon.types[0].type.name);
@@ -46,16 +47,13 @@ $("#pokeSaveButton").on("click", function () {
 
 function toggleImage() {
   if (flag == false) {
-    console.log("pokeCardImage image matched");
     $("#pokemonImage").attr("src", currentPoke["sprites"]["front_default"] || "");
     flag = true;
   } else {
-    console.log("pokeCardImage image not matched");
     $("#pokemonImage").attr("src", currentPoke["sprites"]["back_default"] || "");
     flag = false;
   }
 }
-
 
 function showPoke(id) {
   console.log("Show poke" + id);
