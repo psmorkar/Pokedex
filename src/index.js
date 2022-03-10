@@ -1,13 +1,20 @@
-var flag = true;
-const cachedPokemon = {};
+var toggle = false;
 var currentPoke = {};
 $("#pokemonImage").attr("src", "" );
 
+$( document ).ready(function() {
+  console.log( "ready!" );
+  for (var i = 0; i < localStorage.length; i++){
+    var poke = JSON.parse(localStorage.getItem(localStorage.key(i)));
+    addToPokeContainer(poke);
+  }
+});
+
 async function getPokemonInfo(name) {
   const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+  console.log("Inside getPokemonInfo()");
   const pokemon = await res.json();
   currentPoke = pokemon;
-  console.log('Poke Data' + cachedPokemon[25]);
   getPokemonGeneralInfo(pokemon);
 }
 
@@ -27,36 +34,38 @@ $("#pokeButton").on("click", function () {
 
 $("#pokeSaveButton").on("click", function () {
   var id = currentPoke["id"];
-  if (cachedPokemon[id] == null) {
-    console.log('Poke Data' + id);
-    cachedPokemon[id] = currentPoke;
+  console.log("Inside pokeSaveButton " + id);
+  if (localStorage.getItem(id) == null) {
+    localStorage.setItem(id, JSON.stringify(currentPoke));
+    addToPokeContainer(currentPoke);
+  }
+});
 
-    console.log("Button Clicked pokeSaveButton");
+function addToPokeContainer(poke) {
+    console.log("Inside addToPokeContainer id: " + poke);
     const pokemonContainer = document.querySelector(".pokemon-container");
+    console.log("Inside addToPokeContainer: " + pokemonContainer);
     const pokemonEl = document.createElement("div");
     pokemonEl.classList.add("pokemon");
     pokemonEl.innerHTML = `
     <div class="block">
-      <img onclick="showPoke(${currentPoke["id"]})" id="poke${currentPoke["id"]}"src=${currentPoke["sprites"]["front_default"]}>${currentPoke.name}
+      <img onclick="showPoke(${poke["id"]})" id="poke${poke["id"]}"src=${poke["sprites"]["front_default"]}>${poke.name}
     </div>
     `;
     pokemonContainer.appendChild(pokemonEl);
   }
-});
-
 
 function toggleImage() {
-  if (flag == false) {
+  if (toggle === true) {
     $("#pokemonImage").attr("src", currentPoke["sprites"]["front_default"] || "");
-    flag = true;
   } else {
     $("#pokemonImage").attr("src", currentPoke["sprites"]["back_default"] || "");
-    flag = false;
   }
+  toggle = !toggle;
 }
 
 function showPoke(id) {
   console.log("Show poke" + id);
-  currentPoke = cachedPokemon[id];
-  getPokemonGeneralInfo(cachedPokemon[id]);
+  currentPoke = JSON.parse(localStorage.getItem(id));
+  getPokemonGeneralInfo(currentPoke);
 }
